@@ -12,7 +12,7 @@ end
 get("/square/results") do
   @square_num = params.fetch("number").to_f
   @squared = @square_num ** 2
-  @squared = @squared.round(1)
+  @squared = @squared
   erb(:square_results)
 end
 
@@ -22,19 +22,21 @@ get("/square_root/new") do
 end
 get("/square_root/results") do 
   @root_num = params.fetch("user_number").to_f
-  @rooted = @root_num ** 1/2
+  @rooted = @root_num ** 0.5
+  
   erb(:root_results)
 end
 
 
 get("/random/new") do
+  erb(:random)
 end
 get("/random/results") do
   @min = params.fetch("user_min").to_f
   @max = params.fetch("user_max").to_f
 
   @random_num = rand(@min..@max).to_f
-  "test"
+  erb(:random_result)
 end
 
 get("/payment/new") do
@@ -49,6 +51,6 @@ get("/payment/results") do
   @payment = num / denom
   @apr = @apr.to_fs(:percentage, {:precision => 4})
   @principal = @principal.to_fs(:currency, {:precision => 2})
-  @payment = @payment.round(2)
+  @payment = @payment.to_fs(:currency, {:precision => 2})
   erb(:pay_result)
 end
